@@ -1857,6 +1857,15 @@ Automatic recording is optional. It stops in incognito or when the account chang
     <string name="morphe_kids_mode_daily_limit_minutes_summary">Total watch time allowed per day. 0 means no limit</string>
     <string name="morphe_kids_mode_allowed_hours_title">Allowed hours</string>
     <string name="morphe_kids_mode_allowed_hours_summary">Format HH:mm-HH:mm, for example 07:00-20:30. Leave empty to allow any time</string>
+    <string name="morphe_kids_mode_distance_category_title">Screen distance</string>
+    <string name="morphe_kids_mode_distance_title">Pause when sitting too close</string>
+    <string name="morphe_kids_mode_distance_summary">Uses the front camera to estimate the distance to the child's face. Images are analysed on the device only and are never saved or sent</string>
+    <string name="morphe_kids_mode_distance_min_cm_title">Minimum distance</string>
+    <string name="morphe_kids_mode_distance_min_cm_summary">The video pauses when the child is closer than this, and resumes when they move back</string>
+    <string name="morphe_kids_mode_distance_saver_title">Battery saver</string>
+    <string name="morphe_kids_mode_distance_saver_summary">The camera checks for 4 seconds then turns off for 8 seconds. Uses about a third of the battery, but reacts a few seconds later</string>
+    <string name="morphe_kids_mode_distance_show_title">Show measured distance</string>
+    <string name="morphe_kids_mode_distance_show_summary">Shows the estimated distance every few seconds, to check the setting. Turn off after checking</string>
     <string name="morphe_kids_mode_quiz_category_title">Learning quiz</string>
     <string name="morphe_kids_mode_quiz_title">Show quiz while watching</string>
     <string name="morphe_kids_mode_quiz_summary">The video pauses and math questions must be answered correctly to keep watching. A wrong answer changes the question and adds one more</string>
@@ -1865,7 +1874,7 @@ Automatic recording is optional. It stops in incognito or when the account chang
     <string name="morphe_kids_mode_quiz_questions_title">Correct answers required</string>
     <string name="morphe_kids_mode_quiz_questions_summary">Correct answers needed each time. Each wrong answer adds one more (up to 10)</string>
     <string name="morphe_kids_mode_quiz_voice_title">Voice encouragement</string>
-    <string name="morphe_kids_mode_quiz_voice_summary">Reads encouragement aloud in Vietnamese when the quiz starts and after a wrong answer</string>
+    <string name="morphe_kids_mode_quiz_voice_summary">Reads encouragement aloud in Vietnamese during the quiz and when sitting too close</string>
     <string name="morphe_kids_mode_quiz_math_level_title">Math level</string>
     <string name="morphe_kids_mode_quiz_math_level_summary">1: within 10, 2: within 20, 3: within 100, 4: multiplication and division</string>
 </resources>

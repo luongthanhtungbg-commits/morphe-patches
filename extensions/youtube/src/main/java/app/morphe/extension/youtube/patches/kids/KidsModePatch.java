@@ -48,7 +48,7 @@ import app.morphe.extension.youtube.settings.Settings;
 public final class KidsModePatch {
 
     private enum LockReason {
-        QUIZ, DAILY_LIMIT, OUTSIDE_HOURS, BLOCKED_VIDEO
+        QUIZ, DAILY_LIMIT, OUTSIDE_HOURS, BLOCKED_VIDEO, TOO_CLOSE
     }
 
     /** Extra time a parent grants with one tap. */
@@ -92,6 +92,7 @@ public final class KidsModePatch {
         try {
             if (!Settings.KIDS_MODE.get()) {
                 lastTickMs = 0;
+                if (KidsDistanceMonitor.isRunning()) KidsDistanceMonitor.stop();
                 return;
             }
 
@@ -104,6 +105,7 @@ public final class KidsModePatch {
             }
 
             rollOverDayIfNeeded();
+            tickDistanceMonitor();
 
             final long delta = KidsRules.tickDelta(lastTickMs, now);
             lastTickMs = now;
@@ -179,6 +181,81 @@ public final class KidsModePatch {
         return calendar.get(Calendar.HOUR_OF_DAY) * 60 + calendar.get(Calendar.MINUTE);
     }
 
+    // ---------------------------------------------------------------- Screen distance
+
+    private static final String VOICE_TOO_CLOSE = "Bé ơi, ngồi xa màn hình ra một chút nhé!";
+    private static final String VOICE_DISTANCE_OK = "Giỏi lắm! Xem tiếp nhé!";
+    /** Consecutive close measurements (about 0.5 s apart) before pausing. */
+    private static final int TOO_CLOSE_SAMPLES = 3;
+    /** Consecutive safe measurements before resuming. */
+    private static final int SAFE_SAMPLES = 2;
+    /** Resume if no face is seen for this long, for example the child walked away. */
+    private static final long NO_FACE_RESUME_MS = 8_000;
+    private static final long SHOW_DISTANCE_INTERVAL_MS = 3_000;
+
+    private static int tooCloseCount, safeCount;
+    private static long lastFaceSeenMs, lastDistanceShownMs;
+
+    private static void tickDistanceMonitor() {
+        if (!Settings.KIDS_MODE_DISTANCE.get()) {
+            if (KidsDistanceMonitor.isRunning()) KidsDistanceMonitor.stop();
+            return;
+        }
+        Utils.runOnMainThreadNowOrLater(() -> {
+            Activity activity = Utils.getActivity();
+            if (activity != null) KidsDistanceMonitor.onPlaybackTick(activity, KidsModePatch::onDistance,
+                    Settings.KIDS_MODE_DISTANCE_SAVER.get());
+        });
+    }
+
+    private static void onDistance(float distanceCm) {
+        try {
+            if (!Settings.KIDS_MODE.get() || !Settings.KIDS_MODE_DISTANCE.get()) {
+                KidsDistanceMonitor.stop();
+                return;
+            }
+            final long now = System.currentTimeMillis();
+            final int minimumCm = Settings.KIDS_MODE_DISTANCE_MIN_CM.get();
+            if (distanceCm > 0) lastFaceSeenMs = now;
+
+            if (distanceCm > 0 && Settings.KIDS_MODE_DISTANCE_SHOW.get()
+                    && now - lastDistanceShownMs > SHOW_DISTANCE_INTERVAL_MS) {
+                lastDistanceShownMs = now;
+                Utils.showSnackbarShort("Khoảng cách: " + Math.round(distanceCm) + " cm");
+            }
+
+            if (lockReason == LockReason.TOO_CLOSE) {
+                final boolean safe = distanceCm > 0
+                        ? distanceCm >= minimumCm + KidsRules.DISTANCE_HYSTERESIS_CM
+                        : now - lastFaceSeenMs > NO_FACE_RESUME_MS;
+                safeCount = safe ? safeCount + 1 : 0;
+                if (safeCount >= SAFE_SAMPLES) {
+                    safeCount = 0;
+                    tooCloseCount = 0;
+                    unlock(false);
+                    speak(VOICE_DISTANCE_OK);
+                }
+                return;
+            }
+
+            if (lockDialog != null) {
+                tooCloseCount = 0; // Another lock screen is showing.
+                return;
+            }
+
+            tooCloseCount = (distanceCm > 0 && distanceCm < minimumCm) ? tooCloseCount + 1 : 0;
+            if (tooCloseCount > 0) KidsDistanceMonitor.markSuspicious();
+            if (tooCloseCount >= TOO_CLOSE_SAMPLES) {
+                tooCloseCount = 0;
+                safeCount = 0;
+                lastFaceSeenMs = now;
+                showLock(LockReason.TOO_CLOSE, VideoInformation.getVideoTime());
+            }
+        } catch (Exception ex) {
+            Logger.printException(() -> "Kids mode onDistance failure", ex);
+        }
+    }
+
     // ---------------------------------------------------------------- Playback control
 
     /**
@@ -241,6 +318,8 @@ public final class KidsModePatch {
             if (activity == null || activity.isFinishing() || lockDialog != null) return;
             pausePlayback();
             lockReason = reason;
+            KidsDistanceMonitor.setKeepAlive(reason == LockReason.TOO_CLOSE);
+            if (reason == LockReason.TOO_CLOSE) speak(VOICE_TOO_CLOSE);
             lockDialog = buildDialog(activity, reason);
             lockDialog.show();
         });
@@ -251,6 +330,7 @@ public final class KidsModePatch {
         lockDialog = null;
         lockReason = null;
         lockVideoTime = -1;
+        KidsDistanceMonitor.setKeepAlive(false);
         if (resetQuizTimer) msSinceLastQuiz = 0;
         KidsVoice.stop();
         if (dialog != null) {
@@ -305,6 +385,11 @@ public final class KidsModePatch {
                 title = "Hết giờ xem hôm nay rồi!";
                 body = "Con đã xem " + KidsRules.formatMinutes(usedTodayMs)
                         + ". Mình nghỉ mắt, đi chơi hoặc đọc sách nhé.";
+            }
+            case TOO_CLOSE -> {
+                emoji = "👀";
+                title = "Bé ngồi gần màn hình quá!";
+                body = "Bé ngồi xa ra một chút nhé. Video sẽ tự chạy lại khi bé ngồi đủ xa.";
             }
             case OUTSIDE_HOURS -> {
                 emoji = "🌙";

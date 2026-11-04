@@ -120,6 +120,32 @@ public final class KidsRules {
         return intervalMinutes > 0 && msSinceLastQuiz >= intervalMinutes * 60_000L;
     }
 
+    // ---------------------------------------------------------------- Screen distance
+
+    /** Average distance between the eye centers of a young child, in millimeters. */
+    public static final float CHILD_EYE_DISTANCE_MM = 52f;
+
+    /** Extra distance needed to unlock, so the lock does not flicker at the threshold. */
+    public static final int DISTANCE_HYSTERESIS_CM = 3;
+
+    /**
+     * Focal length in pixels of an image whose width spans the sensor width.
+     */
+    public static float focalLengthPixels(float focalLengthMm, float sensorWidthMm, int imageWidthPx) {
+        if (sensorWidthMm <= 0) return 0;
+        return focalLengthMm / sensorWidthMm * imageWidthPx;
+    }
+
+    /**
+     * Pinhole camera estimate: distance = focal length (px) * real size / size in image (px).
+     *
+     * @return Distance in centimeters, or -1 if it cannot be estimated.
+     */
+    public static float estimateDistanceCm(float focalLengthPx, float eyeDistancePx, float eyeDistanceMm) {
+        if (focalLengthPx <= 0 || eyeDistancePx <= 0) return -1;
+        return focalLengthPx * eyeDistanceMm / eyeDistancePx / 10f;
+    }
+
     public static String formatMinutes(long ms) {
         long minutes = Math.max(0, ms) / 60_000L;
         return minutes + " phút";

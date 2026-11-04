@@ -1693,6 +1693,15 @@ Tự động ghi là tùy chọn. Nó dừng lại khi ở chế độ ẩn danh
     <string name="morphe_kids_mode_daily_limit_minutes_summary">Tổng thời gian được xem trong ngày. 0 là không giới hạn</string>
     <string name="morphe_kids_mode_allowed_hours_title">Khung giờ được xem</string>
     <string name="morphe_kids_mode_allowed_hours_summary">Định dạng HH:mm-HH:mm, ví dụ 07:00-20:30. Để trống để xem bất cứ lúc nào</string>
+    <string name="morphe_kids_mode_distance_category_title">Khoảng cách tới màn hình</string>
+    <string name="morphe_kids_mode_distance_title">Tự dừng khi bé ngồi quá gần</string>
+    <string name="morphe_kids_mode_distance_summary">Dùng camera trước để ước tính khoảng cách tới mặt bé. Hình ảnh chỉ được phân tích trên máy, không lưu và không gửi đi đâu</string>
+    <string name="morphe_kids_mode_distance_min_cm_title">Khoảng cách tối thiểu</string>
+    <string name="morphe_kids_mode_distance_min_cm_summary">Video tạm dừng khi bé ngồi gần hơn mức này, và tự chạy lại khi bé ngồi xa ra</string>
+    <string name="morphe_kids_mode_distance_saver_title">Tiết kiệm pin</string>
+    <string name="morphe_kids_mode_distance_saver_summary">Camera kiểm tra 4 giây rồi nghỉ 8 giây. Tốn pin chỉ khoảng 1/3, nhưng phản ứng chậm hơn vài giây</string>
+    <string name="morphe_kids_mode_distance_show_title">Hiện khoảng cách đo được</string>
+    <string name="morphe_kids_mode_distance_show_summary">Hiện khoảng cách ước tính vài giây một lần để phụ huynh kiểm tra. Nhớ tắt sau khi kiểm tra xong</string>
     <string name="morphe_kids_mode_quiz_category_title">Câu hỏi học tập</string>
     <string name="morphe_kids_mode_quiz_title">Hiện câu hỏi khi đang xem</string>
     <string name="morphe_kids_mode_quiz_summary">Video tạm dừng, bé phải giải đúng các câu toán mới xem tiếp. Trả lời sai sẽ đổi câu khác và thêm 1 câu</string>
@@ -1701,7 +1710,7 @@ Tự động ghi là tùy chọn. Nó dừng lại khi ở chế độ ẩn danh
     <string name="morphe_kids_mode_quiz_questions_title">Số câu cần trả lời đúng</string>
     <string name="morphe_kids_mode_quiz_questions_summary">Số câu cần đúng mỗi lần. Mỗi lần sai cộng thêm 1 câu (tối đa 10)</string>
     <string name="morphe_kids_mode_quiz_voice_title">Giọng nói động viên</string>
-    <string name="morphe_kids_mode_quiz_voice_summary">Đọc lời nhắc bằng tiếng Việt khi bắt đầu làm toán và khi bé trả lời sai</string>
+    <string name="morphe_kids_mode_quiz_voice_summary">Đọc lời nhắc bằng tiếng Việt khi làm toán và khi bé ngồi quá gần màn hình</string>
     <string name="morphe_kids_mode_quiz_math_level_title">Mức độ Toán</string>
     <string name="morphe_kids_mode_quiz_math_level_summary">1: trong phạm vi 10, 2: phạm vi 20, 3: phạm vi 100, 4: nhân chia</string>
 </resources>
