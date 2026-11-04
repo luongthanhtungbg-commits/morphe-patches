@@ -1860,10 +1860,10 @@ Automatic recording is optional. It stops in incognito or when the account chang
     <string name="morphe_kids_mode_distance_category_title">Screen distance</string>
     <string name="morphe_kids_mode_distance_title">Pause when sitting too close</string>
     <string name="morphe_kids_mode_distance_summary">Uses the front camera to estimate the distance to the child's face. Images are analysed on the device only and are never saved or sent</string>
-    <string name="morphe_kids_mode_distance_min_cm_title">Minimum distance</string>
-    <string name="morphe_kids_mode_distance_min_cm_summary">The video pauses when the child is closer than this, and resumes when they move back</string>
-    <string name="morphe_kids_mode_distance_saver_title">Battery saver</string>
-    <string name="morphe_kids_mode_distance_saver_summary">The camera checks for 4 seconds then turns off for 8 seconds. Uses about a third of the battery, but reacts a few seconds later</string>
+    <string name="morphe_kids_mode_distance_min_cm_title">Pause distance</string>
+    <string name="morphe_kids_mode_distance_min_cm_summary">The video pauses when the child is closer than this (15-100 cm), and resumes when they move back</string>
+    <string name="morphe_kids_mode_distance_interval_seconds_title">Check interval</string>
+    <string name="morphe_kids_mode_distance_interval_seconds_summary">How often the camera checks the distance. Longer saves more battery but reacts later. 3 seconds checks continuously</string>
     <string name="morphe_kids_mode_distance_show_title">Show measured distance</string>
     <string name="morphe_kids_mode_distance_show_summary">Shows the estimated distance every few seconds, to check the setting. Turn off after checking</string>
     <string name="morphe_kids_mode_quiz_category_title">Learning quiz</string>

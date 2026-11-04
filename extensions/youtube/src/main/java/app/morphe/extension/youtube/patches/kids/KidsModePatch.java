@@ -204,7 +204,7 @@ public final class KidsModePatch {
         Utils.runOnMainThreadNowOrLater(() -> {
             Activity activity = Utils.getActivity();
             if (activity != null) KidsDistanceMonitor.onPlaybackTick(activity, KidsModePatch::onDistance,
-                    Settings.KIDS_MODE_DISTANCE_SAVER.get());
+                    Settings.KIDS_MODE_DISTANCE_INTERVAL_SECONDS.get());
         });
     }
 

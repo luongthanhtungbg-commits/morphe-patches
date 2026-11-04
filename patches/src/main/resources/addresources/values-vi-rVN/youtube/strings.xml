@@ -1696,10 +1696,10 @@ Tự động ghi là tùy chọn. Nó dừng lại khi ở chế độ ẩn danh
     <string name="morphe_kids_mode_distance_category_title">Khoảng cách tới màn hình</string>
     <string name="morphe_kids_mode_distance_title">Tự dừng khi bé ngồi quá gần</string>
     <string name="morphe_kids_mode_distance_summary">Dùng camera trước để ước tính khoảng cách tới mặt bé. Hình ảnh chỉ được phân tích trên máy, không lưu và không gửi đi đâu</string>
-    <string name="morphe_kids_mode_distance_min_cm_title">Khoảng cách tối thiểu</string>
-    <string name="morphe_kids_mode_distance_min_cm_summary">Video tạm dừng khi bé ngồi gần hơn mức này, và tự chạy lại khi bé ngồi xa ra</string>
-    <string name="morphe_kids_mode_distance_saver_title">Tiết kiệm pin</string>
-    <string name="morphe_kids_mode_distance_saver_summary">Camera kiểm tra 4 giây rồi nghỉ 8 giây. Tốn pin chỉ khoảng 1/3, nhưng phản ứng chậm hơn vài giây</string>
+    <string name="morphe_kids_mode_distance_min_cm_title">Khoảng cách dừng video</string>
+    <string name="morphe_kids_mode_distance_min_cm_summary">Video tạm dừng khi bé ngồi gần hơn mức này (15–100 cm), và tự chạy lại khi bé ngồi xa ra</string>
+    <string name="morphe_kids_mode_distance_interval_seconds_title">Chu kỳ kiểm tra</string>
+    <string name="morphe_kids_mode_distance_interval_seconds_summary">Bao lâu camera kiểm tra một lần. Càng lâu càng tiết kiệm pin nhưng phản ứng chậm hơn. Đặt 3 giây là kiểm tra liên tục</string>
     <string name="morphe_kids_mode_distance_show_title">Hiện khoảng cách đo được</string>
     <string name="morphe_kids_mode_distance_show_summary">Hiện khoảng cách ước tính vài giây một lần để phụ huynh kiểm tra. Nhớ tắt sau khi kiểm tra xong</string>
     <string name="morphe_kids_mode_quiz_category_title">Câu hỏi học tập</string>

@@ -830,7 +830,7 @@ public class Settings extends SharedYouTubeSettings {
     public static final BooleanSetting KIDS_MODE_QUIZ_VOICE = new BooleanSetting("morphe_kids_mode_quiz_voice", TRUE, parent(KIDS_MODE));
     public static final BooleanSetting KIDS_MODE_DISTANCE = new BooleanSetting("morphe_kids_mode_distance", TRUE, parent(KIDS_MODE));
     public static final IntegerSetting KIDS_MODE_DISTANCE_MIN_CM = new IntegerSetting("morphe_kids_mode_distance_min_cm", 30, parentsAll(KIDS_MODE, KIDS_MODE_DISTANCE));
-    public static final BooleanSetting KIDS_MODE_DISTANCE_SAVER = new BooleanSetting("morphe_kids_mode_distance_saver", TRUE, parentsAll(KIDS_MODE, KIDS_MODE_DISTANCE));
+    public static final IntegerSetting KIDS_MODE_DISTANCE_INTERVAL_SECONDS = new IntegerSetting("morphe_kids_mode_distance_interval_seconds", 10, parentsAll(KIDS_MODE, KIDS_MODE_DISTANCE));
     public static final BooleanSetting KIDS_MODE_DISTANCE_SHOW = new BooleanSetting("morphe_kids_mode_distance_show", FALSE, parentsAll(KIDS_MODE, KIDS_MODE_DISTANCE));
     public static final IntegerSetting KIDS_MODE_QUIZ_MATH_LEVEL = new IntegerSetting("morphe_kids_mode_quiz_math_level", 1, parentsAll(KIDS_MODE, KIDS_MODE_QUIZ));
     // Kids mode internal state, not shown in the UI and not exported.
@@ -1249,7 +1249,9 @@ public class Settings extends SharedYouTubeSettings {
         SeekBarPreference.register(new SeekBarConfig(KIDS_MODE_QUIZ_QUESTIONS,
                 1, 10, 1, ""));
         SeekBarPreference.register(new SeekBarConfig(KIDS_MODE_DISTANCE_MIN_CM,
-                20, 60, 5, " cm"));
+                15, 100, 5, " cm"));
+        SeekBarPreference.register(new SeekBarConfig(KIDS_MODE_DISTANCE_INTERVAL_SECONDS,
+                3, 30, 1, " giây"));
         SeekBarPreference.register(new SeekBarConfig(KIDS_MODE_QUIZ_MATH_LEVEL,
                 1, 4, 1, ""));
         SeekBarPreference.register(new SeekBarConfig(NICONICO_COMMENTS_FONT_SIZE,

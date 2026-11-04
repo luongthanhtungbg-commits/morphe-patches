@@ -119,7 +119,10 @@ val kidsModePatch = bytecodePatch(
                                 key = "morphe_kids_mode_distance_min_cm",
                                 tag = SEEKBAR_TAG
                             ),
-                            SwitchPreference("morphe_kids_mode_distance_saver", summary = true),
+                            NonInteractivePreference(
+                                key = "morphe_kids_mode_distance_interval_seconds",
+                                tag = SEEKBAR_TAG
+                            ),
                             SwitchPreference("morphe_kids_mode_distance_show", summary = true),
                         )
                     ),

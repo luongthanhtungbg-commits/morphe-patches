@@ -62,10 +62,8 @@ final class KidsDistanceMonitor {
     /** Camera stops if playback has not ticked for this long, unless kept alive. */
     private static final long IDLE_STOP_MS = 5_000;
     private static final long WATCHDOG_INTERVAL_MS = 1_000;
-    /** Battery saver: the camera checks for this long... */
-    private static final long SAVER_ACTIVE_MS = 4_000;
-    /** ...then turns off for this long. */
-    private static final long SAVER_PAUSE_MS = 8_000;
+    /** Each check keeps the camera on for this long (opening the camera takes part of it). */
+    private static final long CHECK_BURST_MS = 3_500;
     /** A close measurement keeps the camera on until it is confirmed or cleared. */
     private static final long SUSPICIOUS_HOLD_MS = 3_000;
     private static final int TARGET_WIDTH = 320;
@@ -92,7 +90,8 @@ final class KidsDistanceMonitor {
     private static volatile int displayRotationDegrees;
     private static volatile long lastPlaybackTickMs;
     private static volatile boolean keepAlive;
-    private static volatile boolean batterySaver = true;
+    /** Time between the starts of two checks. At or below CHECK_BURST_MS the camera runs continuously. */
+    private static volatile long checkIntervalMs = 10_000;
     private static volatile long sessionStartMs;
     private static volatile long nextAllowedStartMs;
     private static volatile long lastSuspiciousMs;
@@ -109,13 +108,13 @@ final class KidsDistanceMonitor {
     /**
      * Call on the main thread for every playback tick. Starts the camera if needed.
      */
-    static void onPlaybackTick(Activity activity, Listener newListener, boolean saver) {
+    static void onPlaybackTick(Activity activity, Listener newListener, int intervalSeconds) {
         final long now = SystemClock.elapsedRealtime();
         lastPlaybackTickMs = now;
-        batterySaver = saver;
+        checkIntervalMs = Math.max(0, intervalSeconds) * 1000L;
         updateDisplayRotation(activity);
         if (camera != null || opening || cameraUnavailable) return;
-        if (saver && now < nextAllowedStartMs) return;
+        if (!keepAlive && now < nextAllowedStartMs) return;
         start(activity, newListener);
     }
 
@@ -299,10 +298,10 @@ final class KidsDistanceMonitor {
             release();
             return;
         }
-        if (batterySaver && !keepAlive
-                && now - sessionStartMs > SAVER_ACTIVE_MS
+        if (checkIntervalMs > CHECK_BURST_MS && !keepAlive
+                && now - sessionStartMs > CHECK_BURST_MS
                 && now - lastSuspiciousMs > SUSPICIOUS_HOLD_MS) {
-            nextAllowedStartMs = now + SAVER_PAUSE_MS;
+            nextAllowedStartMs = sessionStartMs + checkIntervalMs;
             release();
             return;
         }
