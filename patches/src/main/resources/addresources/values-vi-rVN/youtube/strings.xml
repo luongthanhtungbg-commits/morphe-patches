@@ -1671,4 +1671,39 @@ Tự động ghi là tùy chọn. Nó dừng lại khi ở chế độ ẩn danh
   <string name="morphe_niconico_comments_max_length_title">Độ dài bình luận tối đa</string>
   <string name="morphe_niconico_comments_max_length_summary">Ẩn các bình luận có nhiều ký tự hơn giá trị này. Mỗi emoji được tính là một ký tự</string>
   <string name="morphe_niconico_comments_max_length_no_limit">Không giới hạn</string>
+
+    <!-- misc.kids.kidsModePatch (custom fork) -->
+    <string name="morphe_kids_mode_screen_title">Chế độ trẻ em</string>
+    <string name="morphe_kids_mode_screen_summary">Lọc nội dung, giới hạn thời gian xem và câu hỏi học tập do phụ huynh cài đặt</string>
+    <string name="morphe_kids_mode_title">Bật chế độ trẻ em</string>
+    <string name="morphe_kids_mode_summary">Áp dụng các quy tắc bên dưới khi xem video</string>
+    <string name="morphe_kids_mode_pin_title">Mã PIN phụ huynh</string>
+    <string name="morphe_kids_mode_pin_summary">Cần nhập để mở cài đặt, mở khóa màn hình hoặc tắt chế độ trẻ em. Để trống nếu không dùng PIN</string>
+    <string name="morphe_kids_mode_content_category_title">Nội dung</string>
+    <string name="morphe_kids_mode_blocked_keywords_title">Từ khóa chặn</string>
+    <string name="morphe_kids_mode_blocked_keywords_summary">"Ẩn video có tiêu đề hoặc tên kênh chứa một trong các từ này. Mỗi dòng một từ khóa"</string>
+    <string name="morphe_kids_mode_allowed_keywords_title">Từ khóa và kênh được phép</string>
+    <string name="morphe_kids_mode_allowed_keywords_summary">"Nếu điền, chỉ hiện video khớp ít nhất một từ hoặc tên kênh trong danh sách. Mỗi dòng một mục"</string>
+    <string name="morphe_kids_mode_hide_shorts_title">Ẩn Shorts</string>
+    <string name="morphe_kids_mode_hide_shorts_summary">Ẩn Shorts khỏi trang chủ và kết quả tìm kiếm</string>
+    <string name="morphe_kids_mode_block_playback_title">Chặn video không phù hợp khi mở</string>
+    <string name="morphe_kids_mode_block_playback_summary">Kiểm tra cả video đang phát, ví dụ khi mở từ đường link</string>
+    <string name="morphe_kids_mode_time_category_title">Thời gian xem</string>
+    <string name="morphe_kids_mode_daily_limit_minutes_title">Giới hạn mỗi ngày</string>
+    <string name="morphe_kids_mode_daily_limit_minutes_summary">Tổng thời gian được xem trong ngày. 0 là không giới hạn</string>
+    <string name="morphe_kids_mode_allowed_hours_title">Khung giờ được xem</string>
+    <string name="morphe_kids_mode_allowed_hours_summary">Định dạng HH:mm-HH:mm, ví dụ 07:00-20:30. Để trống để xem bất cứ lúc nào</string>
+    <string name="morphe_kids_mode_quiz_category_title">Câu hỏi học tập</string>
+    <string name="morphe_kids_mode_quiz_title">Hiện câu hỏi khi đang xem</string>
+    <string name="morphe_kids_mode_quiz_summary">Video tạm dừng, bé phải trả lời đúng mới xem tiếp được</string>
+    <string name="morphe_kids_mode_quiz_interval_minutes_title">Chu kỳ hỏi</string>
+    <string name="morphe_kids_mode_quiz_interval_minutes_summary">Số phút xem giữa hai lần hỏi</string>
+    <string name="morphe_kids_mode_quiz_questions_title">Số câu cần trả lời đúng</string>
+    <string name="morphe_kids_mode_quiz_questions_summary">Số câu phải trả lời đúng mỗi lần</string>
+    <string name="morphe_kids_mode_quiz_math_title">Câu hỏi Toán</string>
+    <string name="morphe_kids_mode_quiz_math_level_title">Mức độ Toán</string>
+    <string name="morphe_kids_mode_quiz_math_level_summary">1: trong phạm vi 10, 2: phạm vi 20, 3: phạm vi 100, 4: nhân chia</string>
+    <string name="morphe_kids_mode_quiz_english_title">Câu hỏi từ vựng Tiếng Anh</string>
+    <string name="morphe_kids_mode_quiz_custom_vocab_title">Từ vựng tự thêm</string>
+    <string name="morphe_kids_mode_quiz_custom_vocab_summary">"Mỗi dòng một từ theo dạng tiếng anh=nghĩa, ví dụ: cat=con mèo"</string>
 </resources>

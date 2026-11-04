@@ -60,6 +60,8 @@ public class YouTubeActivityHook extends BaseActivityHook {
     @SuppressWarnings("unused")
     public static void initialize(Activity parentActivity) {
         BaseActivityHook.initialize(new YouTubeActivityHook(), parentActivity);
+        // Kids mode: require the parent PIN before settings can be changed.
+        app.morphe.extension.youtube.patches.kids.KidsModePatch.guardSettings(parentActivity);
     }
 
     /**

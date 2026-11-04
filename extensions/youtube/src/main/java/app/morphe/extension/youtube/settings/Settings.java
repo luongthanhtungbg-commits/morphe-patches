@@ -814,6 +814,28 @@ public class Settings extends SharedYouTubeSettings {
     public static final StringSetting SB_CATEGORY_FILLER_COLOR = new StringSetting("morphe_sb_filler_color", "#CC7300FF");
     public static final StringSetting SB_CATEGORY_MUSIC_OFFTOPIC = new StringSetting("morphe_sb_music_offtopic", MANUAL_SKIP.morpheKeyValue, parent(SB_ENABLED));
     public static final StringSetting SB_CATEGORY_MUSIC_OFFTOPIC_COLOR = new StringSetting("morphe_sb_music_offtopic_color", "#CCFF9900");
+    // Kids mode (custom fork)
+    public static final BooleanSetting KIDS_MODE = new BooleanSetting("morphe_kids_mode", FALSE);
+    public static final StringSetting KIDS_MODE_PIN = new StringSetting("morphe_kids_mode_pin", "", parent(KIDS_MODE));
+    public static final StringSetting KIDS_MODE_BLOCKED_KEYWORDS = new StringSetting("morphe_kids_mode_blocked_keywords",
+            "kinh dị\nhorror\nma quỷ\nđánh nhau\nbạo lực\ngun\nblood\nprank\n18+", parent(KIDS_MODE));
+    public static final StringSetting KIDS_MODE_ALLOWED_KEYWORDS = new StringSetting("morphe_kids_mode_allowed_keywords", "", parent(KIDS_MODE));
+    public static final BooleanSetting KIDS_MODE_HIDE_SHORTS = new BooleanSetting("morphe_kids_mode_hide_shorts", TRUE, parent(KIDS_MODE));
+    public static final BooleanSetting KIDS_MODE_BLOCK_PLAYBACK = new BooleanSetting("morphe_kids_mode_block_playback", TRUE, parent(KIDS_MODE));
+    public static final IntegerSetting KIDS_MODE_DAILY_LIMIT_MINUTES = new IntegerSetting("morphe_kids_mode_daily_limit_minutes", 60, parent(KIDS_MODE));
+    public static final StringSetting KIDS_MODE_ALLOWED_HOURS = new StringSetting("morphe_kids_mode_allowed_hours", "07:00-20:30", parent(KIDS_MODE));
+    public static final BooleanSetting KIDS_MODE_QUIZ = new BooleanSetting("morphe_kids_mode_quiz", TRUE, parent(KIDS_MODE));
+    public static final IntegerSetting KIDS_MODE_QUIZ_INTERVAL_MINUTES = new IntegerSetting("morphe_kids_mode_quiz_interval_minutes", 15, parentsAll(KIDS_MODE, KIDS_MODE_QUIZ));
+    public static final IntegerSetting KIDS_MODE_QUIZ_QUESTIONS = new IntegerSetting("morphe_kids_mode_quiz_questions", 3, parentsAll(KIDS_MODE, KIDS_MODE_QUIZ));
+    public static final BooleanSetting KIDS_MODE_QUIZ_MATH = new BooleanSetting("morphe_kids_mode_quiz_math", TRUE, parentsAll(KIDS_MODE, KIDS_MODE_QUIZ));
+    public static final IntegerSetting KIDS_MODE_QUIZ_MATH_LEVEL = new IntegerSetting("morphe_kids_mode_quiz_math_level", 1, parentsAll(KIDS_MODE, KIDS_MODE_QUIZ));
+    public static final BooleanSetting KIDS_MODE_QUIZ_ENGLISH = new BooleanSetting("morphe_kids_mode_quiz_english", TRUE, parentsAll(KIDS_MODE, KIDS_MODE_QUIZ));
+    public static final StringSetting KIDS_MODE_QUIZ_CUSTOM_VOCAB = new StringSetting("morphe_kids_mode_quiz_custom_vocab", "", parentsAll(KIDS_MODE, KIDS_MODE_QUIZ));
+    // Kids mode internal state, not shown in the UI and not exported.
+    public static final LongSetting KIDS_MODE_USED_TODAY_MS = new LongSetting("morphe_kids_mode_used_today_ms", 0L, false, false);
+    public static final StringSetting KIDS_MODE_USED_DAY = new StringSetting("morphe_kids_mode_used_day", "", false, false);
+    public static final LongSetting KIDS_MODE_EXTRA_TODAY_MS = new LongSetting("morphe_kids_mode_extra_today_ms", 0L, false, false);
+
     // Dummy setting. Category is not exposed in the UI nor does it ever change.
     public static final StringSetting SB_CATEGORY_UNSUBMITTED = new StringSetting("morphe_sb_unsubmitted", SKIP_AUTOMATICALLY.morpheKeyValue, false, false);
     public static final StringSetting SB_CATEGORY_UNSUBMITTED_COLOR = new StringSetting("morphe_sb_unsubmitted_color", "#FFFFFFFF", false, false);
@@ -1217,6 +1239,15 @@ public class Settings extends SharedYouTubeSettings {
                 10, 25, 1, "x", 10));
         SeekBarPreference.register(new SeekBarConfig(VIDEO_DELAY,
                 0, 5000, 25, "ms"));
+        // Kids mode (custom fork). Daily limit 0 means no limit.
+        SeekBarPreference.register(new SeekBarConfig(KIDS_MODE_DAILY_LIMIT_MINUTES,
+                0, 240, 5, " phút"));
+        SeekBarPreference.register(new SeekBarConfig(KIDS_MODE_QUIZ_INTERVAL_MINUTES,
+                1, 60, 1, " phút"));
+        SeekBarPreference.register(new SeekBarConfig(KIDS_MODE_QUIZ_QUESTIONS,
+                1, 10, 1, ""));
+        SeekBarPreference.register(new SeekBarConfig(KIDS_MODE_QUIZ_MATH_LEVEL,
+                1, 4, 1, ""));
         SeekBarPreference.register(new SeekBarConfig(NICONICO_COMMENTS_FONT_SIZE,
                 12, 40, 1, "sp"));
         SeekBarPreference.register(new SeekBarConfig(NICONICO_COMMENTS_OPACITY,

@@ -1835,4 +1835,39 @@ Automatic recording is optional. It stops in incognito or when the account chang
     <string name="morphe_niconico_comments_max_length_title">Max comment length</string>
     <string name="morphe_niconico_comments_max_length_summary">Hides comments with more characters than this. Each emoji counts as one character</string>
     <string name="morphe_niconico_comments_max_length_no_limit">No limit</string>
+
+    <!-- misc.kids.kidsModePatch (custom fork) -->
+    <string name="morphe_kids_mode_screen_title">Kids mode</string>
+    <string name="morphe_kids_mode_screen_summary">Content filter, watch time limit and learning quiz controlled by a parent</string>
+    <string name="morphe_kids_mode_title">Enable kids mode</string>
+    <string name="morphe_kids_mode_summary">Applies the rules below while watching</string>
+    <string name="morphe_kids_mode_pin_title">Parent PIN</string>
+    <string name="morphe_kids_mode_pin_summary">Required to open settings, unlock the lock screen, or turn off kids mode. Leave empty for no PIN</string>
+    <string name="morphe_kids_mode_content_category_title">Content</string>
+    <string name="morphe_kids_mode_blocked_keywords_title">Blocked keywords</string>
+    <string name="morphe_kids_mode_blocked_keywords_summary">"Videos whose title or channel contain any of these words are hidden. One keyword per line"</string>
+    <string name="morphe_kids_mode_allowed_keywords_title">Allowed keywords and channels</string>
+    <string name="morphe_kids_mode_allowed_keywords_summary">"If not empty, only videos matching at least one of these words or channel names are shown. One per line"</string>
+    <string name="morphe_kids_mode_hide_shorts_title">Hide Shorts</string>
+    <string name="morphe_kids_mode_hide_shorts_summary">Shorts are hidden from feeds and search</string>
+    <string name="morphe_kids_mode_block_playback_title">Block unsuitable videos when opened</string>
+    <string name="morphe_kids_mode_block_playback_summary">Also checks the video being played, for example when opened from a link</string>
+    <string name="morphe_kids_mode_time_category_title">Watch time</string>
+    <string name="morphe_kids_mode_daily_limit_minutes_title">Daily limit</string>
+    <string name="morphe_kids_mode_daily_limit_minutes_summary">Total watch time allowed per day. 0 means no limit</string>
+    <string name="morphe_kids_mode_allowed_hours_title">Allowed hours</string>
+    <string name="morphe_kids_mode_allowed_hours_summary">Format HH:mm-HH:mm, for example 07:00-20:30. Leave empty to allow any time</string>
+    <string name="morphe_kids_mode_quiz_category_title">Learning quiz</string>
+    <string name="morphe_kids_mode_quiz_title">Show quiz while watching</string>
+    <string name="morphe_kids_mode_quiz_summary">The video pauses and questions must be answered correctly to keep watching</string>
+    <string name="morphe_kids_mode_quiz_interval_minutes_title">Quiz interval</string>
+    <string name="morphe_kids_mode_quiz_interval_minutes_summary">Watch time between quizzes</string>
+    <string name="morphe_kids_mode_quiz_questions_title">Correct answers required</string>
+    <string name="morphe_kids_mode_quiz_questions_summary">Number of questions to answer correctly each time</string>
+    <string name="morphe_kids_mode_quiz_math_title">Math questions</string>
+    <string name="morphe_kids_mode_quiz_math_level_title">Math level</string>
+    <string name="morphe_kids_mode_quiz_math_level_summary">1: within 10, 2: within 20, 3: within 100, 4: multiplication and division</string>
+    <string name="morphe_kids_mode_quiz_english_title">English vocabulary questions</string>
+    <string name="morphe_kids_mode_quiz_custom_vocab_title">Custom vocabulary</string>
+    <string name="morphe_kids_mode_quiz_custom_vocab_summary">"One word per line as english=meaning, for example: cat=con mèo"</string>
 </resources>
