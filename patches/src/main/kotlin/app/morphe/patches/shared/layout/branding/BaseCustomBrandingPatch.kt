@@ -333,7 +333,8 @@ internal fun baseCustomBrandingPatch(
                         originalAppName,
                         appIconStyle,
                         customIcon,
-                        customName
+                        customName,
+                        defaultIconStyle
                     )
 
                     return@finalize
@@ -655,7 +656,8 @@ private fun ResourcePatchContext.applyMountedBranding(
     originalAppName: String,
     appIconStyle: String?,
     customIcon: String?,
-    customName: String?
+    customName: String?,
+    defaultIconStyle: String
 ) {
     if (customName != null) {
         val resourceNames = appNameResourceNames(originalAppName)
