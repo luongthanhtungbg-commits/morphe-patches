@@ -4,8 +4,8 @@ group = "app.morphe"
 
 patches {
     about {
-        name = "Morphe Patches"
-        description = "Patches for Morphe"
+        name = "Smart Kid TV Patches"
+        description = "Morphe patches + Kids mode (Smart Kid TV)"
         source = "git@github.com:MorpheApp/morphe-patches.git"
         author = "MorpheApp"
         contact = "na"
