@@ -826,11 +826,9 @@ public class Settings extends SharedYouTubeSettings {
     public static final StringSetting KIDS_MODE_ALLOWED_HOURS = new StringSetting("morphe_kids_mode_allowed_hours", "07:00-20:30", parent(KIDS_MODE));
     public static final BooleanSetting KIDS_MODE_QUIZ = new BooleanSetting("morphe_kids_mode_quiz", TRUE, parent(KIDS_MODE));
     public static final IntegerSetting KIDS_MODE_QUIZ_INTERVAL_MINUTES = new IntegerSetting("morphe_kids_mode_quiz_interval_minutes", 15, parentsAll(KIDS_MODE, KIDS_MODE_QUIZ));
-    public static final IntegerSetting KIDS_MODE_QUIZ_QUESTIONS = new IntegerSetting("morphe_kids_mode_quiz_questions", 3, parentsAll(KIDS_MODE, KIDS_MODE_QUIZ));
-    public static final BooleanSetting KIDS_MODE_QUIZ_MATH = new BooleanSetting("morphe_kids_mode_quiz_math", TRUE, parentsAll(KIDS_MODE, KIDS_MODE_QUIZ));
+    public static final IntegerSetting KIDS_MODE_QUIZ_QUESTIONS = new IntegerSetting("morphe_kids_mode_quiz_questions", 2, parentsAll(KIDS_MODE, KIDS_MODE_QUIZ));
+    public static final BooleanSetting KIDS_MODE_QUIZ_VOICE = new BooleanSetting("morphe_kids_mode_quiz_voice", TRUE, parentsAll(KIDS_MODE, KIDS_MODE_QUIZ));
     public static final IntegerSetting KIDS_MODE_QUIZ_MATH_LEVEL = new IntegerSetting("morphe_kids_mode_quiz_math_level", 1, parentsAll(KIDS_MODE, KIDS_MODE_QUIZ));
-    public static final BooleanSetting KIDS_MODE_QUIZ_ENGLISH = new BooleanSetting("morphe_kids_mode_quiz_english", TRUE, parentsAll(KIDS_MODE, KIDS_MODE_QUIZ));
-    public static final StringSetting KIDS_MODE_QUIZ_CUSTOM_VOCAB = new StringSetting("morphe_kids_mode_quiz_custom_vocab", "", parentsAll(KIDS_MODE, KIDS_MODE_QUIZ));
     // Kids mode internal state, not shown in the UI and not exported.
     public static final LongSetting KIDS_MODE_USED_TODAY_MS = new LongSetting("morphe_kids_mode_used_today_ms", 0L, false, false);
     public static final StringSetting KIDS_MODE_USED_DAY = new StringSetting("morphe_kids_mode_used_day", "", false, false);

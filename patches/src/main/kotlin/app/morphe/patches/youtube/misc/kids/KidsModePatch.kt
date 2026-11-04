@@ -35,7 +35,7 @@ private const val SEEKBAR_TAG =
 val kidsModePatch = bytecodePatch(
     name = "Kids mode",
     description = "Adds a parent controlled kids mode: keyword based content filtering, " +
-            "daily watch time limit, allowed hours and a Math/English quiz that must be answered to keep watching.",
+            "daily watch time limit, allowed hours and a spoken math quiz that must be answered to keep watching.",
 ) {
     dependsOn(
         sharedExtensionPatch,
@@ -94,15 +94,10 @@ val kidsModePatch = bytecodePatch(
                                 key = "morphe_kids_mode_quiz_questions",
                                 tag = SEEKBAR_TAG
                             ),
-                            SwitchPreference("morphe_kids_mode_quiz_math"),
+                            SwitchPreference("morphe_kids_mode_quiz_voice", summary = true),
                             NonInteractivePreference(
                                 key = "morphe_kids_mode_quiz_math_level",
                                 tag = SEEKBAR_TAG
-                            ),
-                            SwitchPreference("morphe_kids_mode_quiz_english"),
-                            TextPreference(
-                                "morphe_kids_mode_quiz_custom_vocab",
-                                inputType = InputType.TEXT_MULTI_LINE
                             ),
                         )
                     ),

@@ -1859,15 +1859,13 @@ Automatic recording is optional. It stops in incognito or when the account chang
     <string name="morphe_kids_mode_allowed_hours_summary">Format HH:mm-HH:mm, for example 07:00-20:30. Leave empty to allow any time</string>
     <string name="morphe_kids_mode_quiz_category_title">Learning quiz</string>
     <string name="morphe_kids_mode_quiz_title">Show quiz while watching</string>
-    <string name="morphe_kids_mode_quiz_summary">The video pauses and questions must be answered correctly to keep watching</string>
+    <string name="morphe_kids_mode_quiz_summary">The video pauses and math questions must be answered correctly to keep watching. A wrong answer changes the question and adds one more</string>
     <string name="morphe_kids_mode_quiz_interval_minutes_title">Quiz interval</string>
     <string name="morphe_kids_mode_quiz_interval_minutes_summary">Watch time between quizzes</string>
     <string name="morphe_kids_mode_quiz_questions_title">Correct answers required</string>
-    <string name="morphe_kids_mode_quiz_questions_summary">Number of questions to answer correctly each time</string>
-    <string name="morphe_kids_mode_quiz_math_title">Math questions</string>
+    <string name="morphe_kids_mode_quiz_questions_summary">Correct answers needed each time. Each wrong answer adds one more (up to 10)</string>
+    <string name="morphe_kids_mode_quiz_voice_title">Voice encouragement</string>
+    <string name="morphe_kids_mode_quiz_voice_summary">Reads encouragement aloud in Vietnamese when the quiz starts and after a wrong answer</string>
     <string name="morphe_kids_mode_quiz_math_level_title">Math level</string>
     <string name="morphe_kids_mode_quiz_math_level_summary">1: within 10, 2: within 20, 3: within 100, 4: multiplication and division</string>
-    <string name="morphe_kids_mode_quiz_english_title">English vocabulary questions</string>
-    <string name="morphe_kids_mode_quiz_custom_vocab_title">Custom vocabulary</string>
-    <string name="morphe_kids_mode_quiz_custom_vocab_summary">"One word per line as english=meaning, for example: cat=con mèo"</string>
 </resources>

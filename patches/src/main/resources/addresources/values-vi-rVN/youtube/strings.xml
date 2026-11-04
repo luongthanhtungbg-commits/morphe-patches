@@ -1695,15 +1695,13 @@ Tự động ghi là tùy chọn. Nó dừng lại khi ở chế độ ẩn danh
     <string name="morphe_kids_mode_allowed_hours_summary">Định dạng HH:mm-HH:mm, ví dụ 07:00-20:30. Để trống để xem bất cứ lúc nào</string>
     <string name="morphe_kids_mode_quiz_category_title">Câu hỏi học tập</string>
     <string name="morphe_kids_mode_quiz_title">Hiện câu hỏi khi đang xem</string>
-    <string name="morphe_kids_mode_quiz_summary">Video tạm dừng, bé phải trả lời đúng mới xem tiếp được</string>
+    <string name="morphe_kids_mode_quiz_summary">Video tạm dừng, bé phải giải đúng các câu toán mới xem tiếp. Trả lời sai sẽ đổi câu khác và thêm 1 câu</string>
     <string name="morphe_kids_mode_quiz_interval_minutes_title">Chu kỳ hỏi</string>
     <string name="morphe_kids_mode_quiz_interval_minutes_summary">Số phút xem giữa hai lần hỏi</string>
     <string name="morphe_kids_mode_quiz_questions_title">Số câu cần trả lời đúng</string>
-    <string name="morphe_kids_mode_quiz_questions_summary">Số câu phải trả lời đúng mỗi lần</string>
-    <string name="morphe_kids_mode_quiz_math_title">Câu hỏi Toán</string>
+    <string name="morphe_kids_mode_quiz_questions_summary">Số câu cần đúng mỗi lần. Mỗi lần sai cộng thêm 1 câu (tối đa 10)</string>
+    <string name="morphe_kids_mode_quiz_voice_title">Giọng nói động viên</string>
+    <string name="morphe_kids_mode_quiz_voice_summary">Đọc lời nhắc bằng tiếng Việt khi bắt đầu làm toán và khi bé trả lời sai</string>
     <string name="morphe_kids_mode_quiz_math_level_title">Mức độ Toán</string>
     <string name="morphe_kids_mode_quiz_math_level_summary">1: trong phạm vi 10, 2: phạm vi 20, 3: phạm vi 100, 4: nhân chia</string>
-    <string name="morphe_kids_mode_quiz_english_title">Câu hỏi từ vựng Tiếng Anh</string>
-    <string name="morphe_kids_mode_quiz_custom_vocab_title">Từ vựng tự thêm</string>
-    <string name="morphe_kids_mode_quiz_custom_vocab_summary">"Mỗi dòng một từ theo dạng tiếng anh=nghĩa, ví dụ: cat=con mèo"</string>
 </resources>

@@ -35,6 +35,9 @@ val customBrandingPatch = baseCustomBrandingPatch(
     mainActivityName = YOUTUBE_MAIN_ACTIVITY_NAME,
     activityAliasNameWithIntents = $$"com.google.android.youtube.app.honeycomb.Shell$HomeActivity",
     preferenceScreen = PreferenceScreen.GENERAL,
+    // Smart Kid TV fork: the bundled 'custom' icon is the Smart Kid TV logo.
+    defaultIconStyle = "custom",
+    defaultAppName = "Smart Kid TV",
     // Alternative launcher icons that YouTube has but does not show in its settings.
     // The aliases are numbered like the icons, so an alias can be reused if YouTube
     // replaces an icon.

@@ -252,6 +252,7 @@ public final class KidsModePatch {
         lockReason = null;
         lockVideoTime = -1;
         if (resetQuizTimer) msSinceLastQuiz = 0;
+        KidsVoice.stop();
         if (dialog != null) {
             try {
                 dialog.dismiss();
@@ -334,32 +335,41 @@ public final class KidsModePatch {
 
     // ---------------------------------------------------------------- Quiz
 
-    private static void buildQuiz(Activity activity, LinearLayout root) {
-        final int total = Math.max(1, Math.min(10, Settings.KIDS_MODE_QUIZ_QUESTIONS.get()));
+    private static final String VOICE_QUIZ_START = "Làm ít toán để giải lao nhé bé";
+    private static final String VOICE_QUIZ_WRONG = "Cố lên bé, làm thêm 1 câu nữa cho nhớ nhé!";
+    private static final String VOICE_QUIZ_DONE = "Giỏi quá! Xem tiếp thôi!";
+    /** Upper bound of the required correct answers, so a struggling child is not stuck forever. */
+    private static final int QUIZ_MAX_REQUIRED = 10;
 
-        TextView header = text(activity, "🧠 Trả lời đúng để xem tiếp!", 22, true);
+    private static void buildQuiz(Activity activity, LinearLayout root) {
+        final int initialRequired = Math.max(1, Math.min(QUIZ_MAX_REQUIRED, Settings.KIDS_MODE_QUIZ_QUESTIONS.get()));
+
+        TextView header = text(activity, "🧮 Làm ít toán để giải lao nhé bé!", 22, true);
         TextView progress = text(activity, "", 16, false);
-        TextView prompt = text(activity, "", 30, true);
+        TextView face = text(activity, "", 72, false);
+        TextView prompt = text(activity, "", 34, true);
         TextView feedback = text(activity, "", 18, true);
         LinearLayout options = new LinearLayout(activity);
         options.setOrientation(LinearLayout.VERTICAL);
 
         root.addView(header);
         root.addView(progress, marginTop(activity, 8));
-        root.addView(prompt, marginTop(activity, 24));
+        root.addView(face, marginTop(activity, 8));
+        root.addView(prompt, marginTop(activity, 8));
         root.addView(options, marginTop(activity, 20));
         root.addView(feedback, marginTop(activity, 12));
 
+        speak(VOICE_QUIZ_START);
+
         new Object() {
             int correctCount;
+            int required = initialRequired;
 
             void nextQuestion() {
-                progress.setText("Câu " + (correctCount + 1) + "/" + total);
-                KidsQuiz.Question question = quiz.next(
-                        Settings.KIDS_MODE_QUIZ_MATH.get(),
-                        Settings.KIDS_MODE_QUIZ_ENGLISH.get(),
-                        Settings.KIDS_MODE_QUIZ_MATH_LEVEL.get(),
-                        Settings.KIDS_MODE_QUIZ_CUSTOM_VOCAB.get());
+                face.setText("");
+                feedback.setText("");
+                progress.setText("Đúng " + correctCount + "/" + required + " câu");
+                KidsQuiz.Question question = quiz.next(Settings.KIDS_MODE_QUIZ_MATH_LEVEL.get());
                 prompt.setText(question.prompt);
                 options.removeAllViews();
 
@@ -381,25 +391,46 @@ public final class KidsModePatch {
             }
 
             void onAnswer(KidsQuiz.Question question, int index, Button button) {
+                setOptionsEnabled(false);
+
                 if (question.isCorrect(index)) {
                     correctCount++;
                     tint(button, COLOR_CORRECT);
+                    progress.setText("Đúng " + correctCount + "/" + required + " câu");
                     feedback.setTextColor(COLOR_CORRECT);
-                    feedback.setText(correctCount >= total ? "🎉 Giỏi quá! Xem tiếp thôi!" : "✅ Đúng rồi!");
-                    setOptionsEnabled(false);
-                    if (correctCount >= total) {
-                        options.postDelayed(() -> unlock(true), 900);
+                    if (correctCount >= required) {
+                        face.setText("🥳");
+                        feedback.setText("🎉 Giỏi quá! Xem tiếp thôi!");
+                        speak(VOICE_QUIZ_DONE);
+                        options.postDelayed(() -> unlock(true), 1800);
                     } else {
-                        options.postDelayed(() -> {
-                            feedback.setText("");
-                            nextQuestion();
-                        }, 700);
+                        face.setText("😄");
+                        feedback.setText("✅ Đúng rồi!");
+                        options.postDelayed(this::nextQuestion, 900);
                     }
-                } else {
-                    tint(button, COLOR_WRONG);
-                    button.setEnabled(false);
-                    feedback.setTextColor(COLOR_WRONG);
-                    feedback.setText("❌ Chưa đúng, con thử lại nhé!");
+                    return;
+                }
+
+                // Wrong answer: show the correct one, add one more question,
+                // and replace the question so guessing does not help.
+                tint(button, COLOR_WRONG);
+                markCorrectOption(question);
+                required = Math.min(QUIZ_MAX_REQUIRED, required + 1);
+                progress.setText("Đúng " + correctCount + "/" + required + " câu");
+                face.setText("🥺");
+                feedback.setTextColor(COLOR_WRONG);
+                feedback.setText("Cố lên bé, làm thêm 1 câu nữa cho nhớ nhé!");
+                speak(VOICE_QUIZ_WRONG);
+                options.postDelayed(this::nextQuestion, 3000);
+            }
+
+            void markCorrectOption(KidsQuiz.Question question) {
+                int index = 0;
+                for (int r = 0; r < options.getChildCount(); r++) {
+                    ViewGroup row = (ViewGroup) options.getChildAt(r);
+                    for (int c = 0; c < row.getChildCount(); c++, index++) {
+                        if (index == question.correctIndex) tint(row.getChildAt(c), COLOR_CORRECT);
+                    }
                 }
             }
 
@@ -410,6 +441,12 @@ public final class KidsModePatch {
                 }
             }
         }.nextQuestion();
+    }
+
+    private static void speak(String text) {
+        if (!Settings.KIDS_MODE_QUIZ_VOICE.get()) return;
+        Context context = Utils.getContext();
+        if (context != null) KidsVoice.speak(context, text);
     }
 
     // ---------------------------------------------------------------- Parent controls

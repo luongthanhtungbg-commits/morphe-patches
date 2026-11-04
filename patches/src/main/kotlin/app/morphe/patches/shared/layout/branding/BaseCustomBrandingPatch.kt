@@ -166,6 +166,10 @@ internal fun baseCustomBrandingPatch(
     activityAliasNameWithIntents: String,
     preferenceScreen: BasePreferenceScreen.Screen,
     appLauncherIconNames: () -> Map<String, String> = { emptyMap() },
+    // Icon style used when the 'App icon' option is 'Automatic' and no custom icon folder is set.
+    defaultIconStyle: String = DEFAULT_ICON_STYLE_NAME,
+    // App name used when the 'App name' option is not set.
+    defaultAppName: String? = null,
     block: ResourcePatchBuilder.() -> Unit,
     executeBlock: ResourcePatchContext.() -> Unit = {}
 ): ResourcePatch = resourcePatch(
@@ -184,6 +188,7 @@ internal fun baseCustomBrandingPatch(
 
     val customName by stringOption(
         key = "customName",
+        default = defaultAppName,
         title = "App name",
         description = "Custom app name."
     )
@@ -292,7 +297,7 @@ internal fun baseCustomBrandingPatch(
             }
 
             finalize {
-                val iconStyle = resolveIconStyle(appIconStyle, customIcon)
+                val iconStyle = resolveIconStyle(appIconStyle, customIcon, defaultIconStyle)
 
                 // The icon the app starts with, before the user selects one in the app settings.
                 DefaultIconStyleNameExtensionFingerprint.method.returnEarly(iconStyle)
@@ -395,7 +400,7 @@ internal fun baseCustomBrandingPatch(
                     val intentFilters = originalAlias.childNodes
 
                     val enabledNameIndex = if (useCustomName) numberOfPresetAppNames else 1 // 1 indexing
-                    val enabledIconStyle = resolveIconStyle(appIconStyle, customIcon)
+                    val enabledIconStyle = resolveIconStyle(appIconStyle, customIcon, defaultIconStyle)
 
                     // The application icon ('static' icon) is used wherever a launch alias is not,
                     // such as Android Auto, the app list of the system settings, the push
@@ -527,7 +532,10 @@ internal fun baseCustomBrandingPatch(
         val useCustomName = customName != null
         val useCustomIcon = customIcon != null
 
-        if (appIconStyle == CUSTOM_USER_ICON_STYLE_NAME && !useCustomIcon) {
+        // The bundled 'custom' template is a usable icon when it is the default style.
+        if (appIconStyle == CUSTOM_USER_ICON_STYLE_NAME && !useCustomIcon
+            && defaultIconStyle != CUSTOM_USER_ICON_STYLE_NAME
+        ) {
             throw PatchException("The 'Custom' app icon requires the 'Custom icon' option.")
         }
 
@@ -667,7 +675,7 @@ private fun ResourcePatchContext.applyMountedBranding(
         logger.info("Mounted install app name: $customName (${resourceNames.joinToString()})")
     }
 
-    val iconStyle = resolveIconStyle(appIconStyle, customIcon)
+    val iconStyle = resolveIconStyle(appIconStyle, customIcon, defaultIconStyle)
 
     // Nothing to replace, the app already uses the original icon.
     if (iconStyle == ORIGINAL_USER_ICON_STYLE_NAME) return
@@ -705,6 +713,7 @@ private fun isMountedInstall(originalAppPackageName: String) =
 private fun hasMountedNotificationIcon(iconStyle: String, customIcon: String?): Boolean {
     if (iconStyle == ORIGINAL_USER_ICON_STYLE_NAME) return false
     if (iconStyle != CUSTOM_USER_ICON_STYLE_NAME) return true
+    if (customIcon == null) return false
 
     val iconPathFile = File(customIcon!!.trim())
 
@@ -733,9 +742,9 @@ private fun ResourcePatchContext.resourceDirectories(resourceType: String, fileN
 /**
  * The icon style to use, resolving the 'Automatic' option value.
  */
-private fun resolveIconStyle(appIconStyle: String?, customIcon: String?): String =
+private fun resolveIconStyle(appIconStyle: String?, customIcon: String?, defaultIconStyle: String): String =
     appIconStyle
-        ?: if (customIcon != null) CUSTOM_USER_ICON_STYLE_NAME else DEFAULT_ICON_STYLE_NAME
+        ?: if (customIcon != null) CUSTOM_USER_ICON_STYLE_NAME else defaultIconStyle
 
 /**
  * The names of the string resources that decide the app name a launcher and the system show.
