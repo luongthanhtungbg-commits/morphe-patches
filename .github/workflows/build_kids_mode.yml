@@ -12,7 +12,7 @@ jobs:
     name: Build .mpp
     runs-on: ubuntu-latest
     permissions:
-      contents: read
+      contents: write
       packages: read
     steps:
       - name: Checkout
@@ -37,3 +37,14 @@ jobs:
         with:
           name: smart-kid-tv-patches
           path: patches/build/libs
+
+      - name: Publish release for direct download
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          TAG="kids-mode-${{ github.run_number }}"
+          gh release create "$TAG" patches/build/libs/*.mpp \
+            --target "${{ github.sha }}" \
+            --title "Smart Kid TV patches #${{ github.run_number }}" \
+            --notes "Morphe patches + Kids mode. Thêm file .mpp này vào Morphe Manager làm nguồn patch." \
+            --prerelease
