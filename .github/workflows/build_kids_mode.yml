@@ -1,0 +1,39 @@
+name: Build Smart Kid TV patches
+
+# Run manually from the Actions tab. Produces the .mpp patch bundle as an artifact.
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - feature/kids-mode
+
+jobs:
+  build:
+    name: Build .mpp
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: read
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Setup Java
+        uses: actions/setup-java@v6
+        with:
+          distribution: 'temurin'
+          java-version: '21'
+
+      - name: Cache Gradle
+        uses: burrunan/gradle-cache-action@v3
+
+      - name: Build Android bundle
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: ./gradlew :patches:buildAndroid --no-daemon
+
+      - name: Upload .mpp
+        uses: actions/upload-artifact@v7
+        with:
+          name: smart-kid-tv-patches
+          path: patches/build/libs
