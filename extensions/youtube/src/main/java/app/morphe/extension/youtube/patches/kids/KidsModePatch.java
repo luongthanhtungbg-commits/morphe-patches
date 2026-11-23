@@ -11,6 +11,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.res.Configuration;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.GradientDrawable;
@@ -27,6 +28,7 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
@@ -368,7 +370,13 @@ public final class KidsModePatch {
         parentParams.topMargin = dp(activity, 32);
         root.addView(parent, parentParams);
 
-        dialog.setContentView(root);
+        // Scrollable, so nothing is cut off when the screen is short (landscape).
+        ScrollView scroll = new ScrollView(activity);
+        scroll.setFillViewport(true);
+        scroll.setBackgroundColor(COLOR_BACKGROUND);
+        scroll.addView(root, new ViewGroup.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+        dialog.setContentView(scroll);
         Window window = dialog.getWindow();
         if (window != null) {
             window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
@@ -428,10 +436,14 @@ public final class KidsModePatch {
 
     private static void buildQuiz(Activity activity, LinearLayout root) {
         final int initialRequired = Math.max(1, Math.min(QUIZ_MAX_REQUIRED, Settings.KIDS_MODE_QUIZ_QUESTIONS.get()));
+        final boolean landscape = activity.getResources().getConfiguration().orientation
+                == Configuration.ORIENTATION_LANDSCAPE;
+        // Landscape screens are short: all answers in one row. Portrait: a 2 x 2 grid.
+        final int columns = landscape ? KidsQuiz.OPTION_COUNT : 2;
 
         TextView header = text(activity, "🧮 Làm ít toán để giải lao nhé bé!", 22, true);
         TextView progress = text(activity, "", 16, false);
-        TextView face = text(activity, "", 72, false);
+        TextView face = text(activity, "", landscape ? 44 : 72, false);
         TextView prompt = text(activity, "", 34, true);
         TextView feedback = text(activity, "", 18, true);
         LinearLayout options = new LinearLayout(activity);
@@ -458,10 +470,9 @@ public final class KidsModePatch {
                 prompt.setText(question.prompt);
                 options.removeAllViews();
 
-                // 2 x 2 grid of big buttons.
                 LinearLayout row = null;
                 for (int i = 0; i < question.options.length; i++) {
-                    if (i % 2 == 0) {
+                    if (i % columns == 0) {
                         row = new LinearLayout(activity);
                         row.setOrientation(LinearLayout.HORIZONTAL);
                         options.addView(row, marginTop(activity, 10));
